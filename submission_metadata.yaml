@@ -1,0 +1,62 @@
+# Redrob Hackathon — Submission Metadata
+
+team_name: "Nandhana-Solo"
+
+primary_contact:
+  name: "Nandhana K M"
+  email: "nandhanakmurali123@gmail.com"
+  phone: "+91-9633065661"
+
+team_members:
+  - name: "Nandhana K M"
+    email: "nandhanakmurali123@gmail.com"
+    role: "Solo participant — ML/Backend"
+
+github_repo: "https://github.com/Nandhanamurali/india-runs-candidate-ranking"
+
+sandbox_link: "https://colab.research.google.com/drive/1FqjFCWpB4EP2ofZyQCNxPSG1HjRJO3bW?usp=sharing"
+
+reproduce_command: "python generate_submission.py"
+
+compute:
+  platform: "Windows laptop"
+  cpu_cores: 4
+  ram_gb: 16
+  python_version: "3.13.2"
+  os: "Windows 11"
+  uses_gpu_for_inference: false
+  has_network_during_ranking: false
+  pre_computation_required: true
+  pre_computation_time_minutes: 50
+
+ai_tools_used:
+  - "Claude"
+
+ai_usage_summary: |
+  Used Claude for architecture design discussion, code review, debugging, and
+  guidance throughout the build process. All code was reviewed, tested, and
+  validated by me at each step against real sample data before scaling to the
+  full 100K dataset. No candidate data was sent to any external LLM API.
+
+methodology_summary: |
+  Hybrid 3-layer ranking system. Layer 1: rule-based feature extraction directly
+  encoding the JD's explicit disqualifiers (consulting-only backgrounds, pure
+  research with no production deployment, non-engineering titles, title-chasing
+  patterns) plus positive evidence signals (vector DB/hybrid search experience,
+  ranking evaluation framework experience). Layer 2: semantic similarity using
+  sentence-transformers (all-MiniLM-L6-v2) comparing JD meaning against each
+  candidate's full profile text, precomputed offline for all 100K candidates.
+  Layer 3: honeypot suspicion scoring combining multiple weak signals (skill
+  duration/proficiency mismatches, career date overlaps, verification
+  inconsistencies) into a single penalty, validated to produce 0% suspicious
+  profiles in the final top 100. All three layers combine into one composite
+  score; reasoning text is generated directly from extracted facts (no LLM
+  call at ranking time, eliminating hallucination risk). Final ranking step
+  runs in under 35 seconds on CPU.
+
+declarations:
+  read_submission_spec: true
+  code_is_original_work: true
+  no_collusion: true
+  honeypot_check_done: true
+  reproduction_tested: true
